@@ -1,0 +1,40 @@
+spring:
+  datasource:
+    url: ${DB_URL:jdbc:h2:mem:transactiondb}
+    username: ${DB_USERNAME:sa}
+    password: ${DB_PASSWORD:}
+    driverClassName: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    database: H2
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+  h2:
+    console:
+      enabled: true
+      path: /h2
+      settings:
+        web-allow-others: true
+  kafka:
+    bootstrap-servers: ${KAFKA_HOST:dory.srvs.cloudkafka.com:9094}
+    key-serializer: org.apache.kafka.common.serialization.StringSerializer
+    value-serializer: org.apache.kafka.common.serialization.JsonSerializer
+    properties:
+      enable.idempotence: false
+      security.protocol: SASL_SSL
+      sasl.mechanism: SCRAM-SHA-512
+      sasl.jaas.config: 'org.apache.kafka.common.security.scram.ScramLoginModule required username="${KAFKA_USERNAME}" password="${KAFKA_PASSWORD}";'
+
+server:
+  port: 8082
+  servlet:
+    context-path: /transaction-service
+
+account:
+  service:
+    url: ${ACCOUNT_SERVICE_URL:http://localhost:8081/account-service/api/v1/accounts/transfer}
+notification:
+  topic: ${NOTIFICATION_TOPIC:hvzlydbz-default}
+
+
