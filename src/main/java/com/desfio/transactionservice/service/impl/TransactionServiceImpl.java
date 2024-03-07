@@ -37,7 +37,6 @@ public class TransactionServiceImpl implements TransactionService {
     private TransactionResponseMapper transactionResponseMapper;
     private TransactionRequestMapper transactionRequestMapper;
     private AccountService accountService;
-
     private NotificationProducer notificationProducer;
 
     @Autowired
